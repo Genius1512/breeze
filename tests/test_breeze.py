@@ -1,5 +1,14 @@
 import breeze
 
+from os import path
+
+import toml
+
 
 def test_version():
-    assert breeze.__version__ == "0.1.0"
+    with open(
+        path.join(path.dirname(path.dirname(__file__)), "pyproject.toml"), "r"
+    ) as f:
+        parsed_toml = toml.load(f)
+
+    assert breeze.__version__ == parsed_toml["tool"]["poetry"]["version"]
