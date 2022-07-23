@@ -31,7 +31,7 @@ jobs:
       run: poetry install
 
     - name: Activate venv
-      run: eval $(make venv)
+      run: source $VENV
 
     - name: Test with pytest
       run: make test
