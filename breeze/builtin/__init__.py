@@ -1,2 +1,1 @@
-from . import components
-from . import game_objects
+from . import components, game_objects

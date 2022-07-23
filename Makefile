@@ -5,7 +5,7 @@ sandbox: $(mkfile_dir)sandbox/main.py
 	@poetry run python3 $(mkfile_dir)sandbox/main.py
 
 test:
-	@pytest
+	@poetry run pytest
 
 venv:
 	@echo "source `poetry env info --path`/bin/activate"
