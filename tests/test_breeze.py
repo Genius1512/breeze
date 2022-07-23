@@ -1,8 +1,8 @@
-import breeze
-
 from os import path
 
 import toml
+
+import breeze
 
 
 def test_version():
