@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "breeze"
-version = "0.1.0.1"
+version = "0.1.0.2"
 description = ""
 authors = ["Silvan Schmidt <silvan.genius@gmail.com>"]
 license = "MIT"
