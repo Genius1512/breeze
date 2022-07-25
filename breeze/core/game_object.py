@@ -28,7 +28,7 @@ class GameObject:
 
     def _update_game_object(self) -> bool:
         for component in self.__components.values():
-            if not component.update():
+            if not component._update_component():
                 return False
 
         for type_ in self.__components_to_delete:
@@ -52,7 +52,7 @@ class GameObject:
                 f"Cannot add component '{component.TYPE}' a second time"
             )
 
-        component._init_component(self.parent_game, self)
+        component._init_component(self.parent_game, self)  # type: ignore
         self.__components[component.TYPE] = component
 
         return component

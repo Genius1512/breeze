@@ -24,7 +24,7 @@ class Game:
         """
 
         for game_object in self.__game_objects.values():
-            if not game_object.update():
+            if not game_object._update_game_object():
                 return False
 
         for name in self.__game_objects_to_delete:
