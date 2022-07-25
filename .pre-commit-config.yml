@@ -1,0 +1,5 @@
+repos:
+  - repo: https://github.com/genius1512/breeze
+    hooks:
+    - id: black
+

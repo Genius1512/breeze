@@ -14,10 +14,14 @@ class Component:
         self.parent_game_object = None
 
     def _init_component(
-        self, parent_game: Game, parent_game_object: GameObject
+        self,
+        parent_game: Game,
+        parent_game_object: GameObject,
     ) -> None:
         self.parent_game = parent_game
-        self.parent_game_object = parent_game_object
+        self.parent_game_object = (
+            parent_game_object
+        )
 
         self.init()
 

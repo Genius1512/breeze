@@ -21,8 +21,18 @@ sphinx-rtd-theme = "^1.0.0"
 toml = "^0.10.2"
 
 [tool.pyright]
-typeCheckingMode = "strict"
 pythonVersion = "3.10"
+
+typeCheckingMode = "strict"
+
+ignore = [
+  "**/__init__.py"
+]
+
+reportPrivateUsage = false
+
+[tool.black]
+line-length = 50
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

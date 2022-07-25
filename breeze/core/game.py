@@ -5,16 +5,31 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from breeze.core import GameObject
 
-from breeze.exceptions.game_object import (GameObjectNotFoundException,
-                                           NameAlreadyTakenException)
+from breeze.exceptions.game_object import (
+    GameObjectNotFoundException,
+    NameAlreadyTakenException,
+)
 
 
 class Game:
+    """
+    The main class of breeze. It represents a game.
+    """
+
     def __init__(self, title: str) -> None:
+        """
+        Construct a game.
+
+        :param title: The title of the game. Will be displayed in the title bar of the window.
+        """
         self.__title: str = title
 
-        self.__game_objects: dict[str, GameObject] = {}
-        self.__game_objects_to_delete: list[str] = []
+        self.__game_objects: dict[
+            str, GameObject
+        ] = {}
+        self.__game_objects_to_delete: list[
+            str
+        ] = []
 
     def update(self) -> bool:
         """
@@ -23,30 +38,64 @@ class Game:
         :returns: True if the game should continue, otherwise False
         """
 
-        for game_object in self.__game_objects.values():
-            if not game_object._update_game_object():
-                return False
+        for (
+            game_object
+        ) in self.__game_objects.values():
+            if game_object.is_active:
+                if (
+                    not game_object._update_game_object()
+                ):  # TODO: make non-overridable
+                    return False
 
         for name in self.__game_objects_to_delete:
-            self.__game_objects[name]._quit_game_object()
+            self.__game_objects[
+                name
+            ]._quit_game_object()
             del self.__game_objects[name]
 
         self.__game_objects_to_delete = []
 
         return True
 
-    def add_game_object(self, game_object: GameObject) -> GameObject:
-        if game_object.name in self.__game_objects:
+    def add_game_object(
+        self, game_object: GameObject
+    ) -> GameObject:
+        """
+        Add the given GameObject to the game.
+        Raises NameAlreadyTakenException when there is already a GameObject with this name.
+
+        :param game_object: The GameObject to add
+        :returns: The given GameObject. This is to enable
+                  a syntax like this: player = game.add_game_object(GameObject("Player"))
+        """
+
+        if (
+            game_object.name
+            in self.__game_objects
+        ):
             raise NameAlreadyTakenException(
                 f"A GameObject with name '{game_object.name}' is already added to the game"
             )
 
         game_object._init_game_object(self)
-        self.__game_objects[game_object.name] = game_object
+        self.__game_objects[
+            game_object.name
+        ] = game_object
 
         return game_object
 
-    def get_game_object(self, name: str) -> GameObject:
+    def get_game_object(
+        self, name: str
+    ) -> GameObject:
+        """
+        Get the GameObject with the given name.
+        Raises GameObjectNotFoundException if there is no GameObject with this name.
+
+        :param name: The name of the GameObject to get
+
+        :returns: The GameObject with the given name
+        """
+
         if name not in self.__game_objects:
             raise GameObjectNotFoundException(
                 f"A GameObject with name '{name}' could not be found"
@@ -54,10 +103,29 @@ class Game:
 
         return self.__game_objects[name]
 
-    def get_all_game_objects(self) -> dict[str, GameObject]:
+    def get_all_game_objects(
+        self,
+    ) -> dict[str, GameObject]:
+        """
+        Get all GameObjects added to the game.
+
+        :returns: A dictionary of GameObjects with their name as keys
+        """
+
         return self.__game_objects
 
-    def remove_game_object(self, name: str) -> None:
+    def remove_game_object(
+        self, name: str
+    ) -> None:
+        """
+        Remove the GameObject with the given name from the game.
+        This calls the 'quit' method of the GameObject
+        Raises GameObjectNotFoundException if there is no GameObject
+        with the given name.
+
+        :param name: The name of the GameObject to remove
+        """
+
         if name not in self.__game_objects:
             raise GameObjectNotFoundException(
                 f"A GameObject with name {name} could not be found"
@@ -67,6 +135,10 @@ class Game:
 
     @property
     def title(self) -> str:
+        """
+        The title of the GameObjet.
+        """
+
         return self.__title
 
     def __repr__(self) -> str:
