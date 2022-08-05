@@ -96,6 +96,14 @@ class GameObject:
     def add_component(
         self, component: Component
     ) -> Component:
+        """
+        Add the given component to the GameObject.
+        The init() method of the Component will be called.
+        If a Component of this type has already been added to the GameObject,
+        ComponentAlreadyExistentException will be raised.
+
+        :param component: The Component to add
+        """
         if component.TYPE in self.__components:
             raise ComponentAlreadyExistentException(
                 f"Cannot add component '{component.TYPE}' a second time"
@@ -111,6 +119,13 @@ class GameObject:
     def get_component(
         self, type_: str
     ) -> Component:
+        """
+        Get the Component with the given type.
+        If there is no such Component, ComponentNotFoundException will
+        be raised.
+
+        :param type_: The type of the Component to get
+        """
         if type_ not in self.__components:
             raise ComponentNotFoundException(
                 f"This type of component is not added to this GameObject"
@@ -121,11 +136,23 @@ class GameObject:
     def get_all_components(
         self,
     ) -> dict[str, Component]:
+        """
+        Get all Components of the GameObject.
+
+        :returns: A dictionary with all Components with their type as keys
+        """
         return self.__components
 
     def remove_component(
         self, type_: str
     ) -> None:
+        """
+        Remove the Component with the given type.
+        This will call the quit() method of the component.
+        Raises ComponentNotFoundException, if there is no Component with the given type.
+
+        :param type_: The type of the Component to remove
+        """
         if type_ not in self.__components:
             raise ComponentNotFoundException(
                 f"Component with type '{type_}' could not be found"
@@ -135,6 +162,9 @@ class GameObject:
 
     @property
     def name(self) -> str:
+        """
+        The name of the GameObject
+        """
         return self.__name
 
     def __repr__(self) -> str:

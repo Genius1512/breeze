@@ -5,6 +5,7 @@ from breeze.builtin.game_objects import (
     DebugGameObject,
 )
 from breeze.core import Game
+from breeze.core.component import Component
 
 
 def main():
