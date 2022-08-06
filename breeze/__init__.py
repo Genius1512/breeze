@@ -1,3 +1,3 @@
 __version__ = "0.1.1"
 
-from . import builtin, core
+from . import builtin, core, exceptions

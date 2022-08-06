@@ -5,14 +5,6 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from breeze.core import GameObject
 
-import glfw
-from OpenGL.GL import *
-
-from breeze.exceptions.game import (
-    GLFWCouldNotCreateWindowException,
-    GlFWInitException
-)
-
 from breeze.exceptions.game_object import (
     GameObjectNotFoundException,
     NameAlreadyTakenException,
@@ -39,33 +31,12 @@ class Game:
             str
         ] = []
 
-        # OpenGL stuff
-        if not glfw.init():
-            raise GlFWInitException("Could not init GLFW")
-
-        glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
-        glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
-        glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
-
-        self.__window = glfw.create_window(800, 600, self.__title, None, None)
-        if not self.__window:
-            self.quit()
-            raise GLFWCouldNotCreateWindowException("Could not create window")
-
-        glfw.make_context_current(self.__window)
-        glfw.set_framebuffer_size_callback(self.__window, self.__framebuffer_size_callback)
-
     def update(self) -> bool:
         """
         Update the game.
 
         :returns: True if the game should continue, otherwise False
         """
-
-        if glfw.window_should_close(self.__window):
-            return False
-
-        self.__process_input(self.__window)
 
         for (
             game_object
@@ -83,9 +54,6 @@ class Game:
             del self.__game_objects[name]
 
         self.__game_objects_to_delete = []
-
-        glfw.swap_buffers(self.__window)
-        glfw.poll_events()
 
         return True
 
@@ -168,15 +136,6 @@ class Game:
     def quit(self) -> None:
         for game_object in self.__game_objects.values():
             game_object._quit_game_object()
-
-        glfw.terminate()
-
-    # GLFW
-    def __framebuffer_size_callback(self, window, width: int, height: int):
-        glViewport(0, 0, width, height)
-
-    def __process_input(self, window):
-        pass
 
     @property
     def title(self) -> str:
