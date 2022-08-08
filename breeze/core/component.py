@@ -11,12 +11,12 @@ class Component:
     A class to add functionality to GameObjects
     """
 
-    TYPE = "Component"
-
-    def __init__(self) -> None:
+    def __init__(self, name: str) -> None:
         """
         Construct a Component.
         """
+
+        self.__name = name
 
         self.parent_game: Game = None  # type: ignore
         self.parent_game_object: GameObject = None  # type: ignore
@@ -42,5 +42,9 @@ class Component:
         This method gets called when the Component is removed from it's parent GameObject.
         """
 
+    @property
+    def name(self) -> str:
+        return self.__name
+
     def __repr__(self) -> str:
-        return f"breeze.core.Component({Component.TYPE})"
+        return f"breeze.core.Component({Component.name})"

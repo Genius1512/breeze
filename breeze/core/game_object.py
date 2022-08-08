@@ -67,9 +67,9 @@ class GameObject:
 
         :param component: The Component to add
         """
-        if component.TYPE in self.__components:
-            raise ComponentAlreadyExistentException(
-                f"Cannot add component '{component.TYPE}' a second time"
+        if component.name in self.__components:
+            raise ComponentAlreadyExistentException(  # TODO: rename exception
+                f"Cannot add component '{component.name}' a second time"
             )
 
         component.parent_game = self.parent_game
@@ -77,13 +77,13 @@ class GameObject:
         component.init()
         
         self.__components[
-            component.TYPE
+            component.name
         ] = component
 
         return component
 
     def get_component(
-        self, type_: str
+        self, name: str
     ) -> Component:
         """
         Get the Component with the given type.
@@ -92,12 +92,12 @@ class GameObject:
 
         :param type_: The type of the Component to get
         """
-        if type_ not in self.__components:
+        if name not in self.__components:
             raise ComponentNotFoundException(
                 f"This type of component is not added to this GameObject"
             )
 
-        return self.__components[type_]
+        return self.__components[name]
 
     def get_all_components(
         self,
@@ -110,7 +110,7 @@ class GameObject:
         return self.__components
 
     def remove_component(
-        self, type_: str
+        self, name: str
     ) -> None:
         """
         Remove the Component with the given type.
@@ -119,12 +119,12 @@ class GameObject:
 
         :param type_: The type of the Component to remove
         """
-        if type_ not in self.__components:
+        if name not in self.__components:
             raise ComponentNotFoundException(
-                f"Component with type '{type_}' could not be found"
+                f"Component with type '{name}' could not be found"
             )
 
-        self.components_to_delete.append(type_)
+        self.components_to_delete.append(name)
 
     @property
     def name(self) -> str:

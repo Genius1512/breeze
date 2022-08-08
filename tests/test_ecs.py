@@ -22,7 +22,7 @@ class TstingComponent(breeze.core.Component):
     TYPE = "cmp"
 
     def __init__(self, log: list[str]) -> None:
-        super().__init__()
+        super().__init__("cmp")
 
         self.log = log
 
@@ -43,7 +43,7 @@ def test_ecs():
     game = breeze.core.Game("Test")
 
     obj = game.add_game_object(TstingGameObject(log))
-    cmp = obj.add_component(TstingComponent(log))
+    _ = obj.add_component(TstingComponent(log))
 
     game.update()
 

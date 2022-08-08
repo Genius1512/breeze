@@ -48,9 +48,9 @@ class Game:
                         if not component.update():
                             return False
 
-            for type_ in game_object.components_to_delete:
-                game_object.get_component(type_).quit()
-                del game_object.__components[type_]
+            for name in game_object.components_to_delete:
+                game_object.get_component(name).quit()
+                del game_object.__components[name]
 
         for name in self.__game_objects_to_delete:
             for component in self.__game_objects[name].get_all_components().values():
