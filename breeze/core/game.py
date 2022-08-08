@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 from breeze.exceptions.game_object import (
     GameObjectNotFoundException,
-    NameAlreadyTakenException,
+    ObjectNameAlreadyTakenException,
 )
 
 
@@ -77,7 +77,7 @@ class Game:
             game_object.name
             in self.__game_objects
         ):
-            raise NameAlreadyTakenException(
+            raise ObjectNameAlreadyTakenException(
                 f"A GameObject with name '{game_object.name}' is already added to the game"
             )
 

@@ -1,4 +1,4 @@
-class NameAlreadyTakenException(Exception):
+class ObjectNameAlreadyTakenException(Exception):
     pass
 
 

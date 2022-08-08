@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from breeze.core import Component, Game
 
 from breeze.exceptions.component import (
-    ComponentAlreadyExistentException,
+    ComponentNameAlreadyTakenException,
     ComponentNotFoundException,
 )
 
@@ -68,8 +68,8 @@ class GameObject:
         :param component: The Component to add
         """
         if component.name in self.__components:
-            raise ComponentAlreadyExistentException(  # TODO: rename exception
-                f"Cannot add component '{component.name}' a second time"
+            raise ComponentNameAlreadyTakenException(
+                f"A Component with name {component.name} is already added to the GameObject"
             )
 
         component.parent_game = self.parent_game

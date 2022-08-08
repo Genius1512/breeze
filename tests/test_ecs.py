@@ -1,4 +1,7 @@
 import breeze
+from breeze.core import Component, GameObject
+from breeze.exceptions.component import ComponentNameAlreadyTakenException
+from breeze.exceptions.game_object import ObjectNameAlreadyTakenException
 
 
 class TstingGameObject(breeze.core.GameObject):
@@ -37,7 +40,7 @@ class TstingComponent(breeze.core.Component):
         self.log.append("quit cmp")
 
  
-def test_ecs():
+def test_updating_logic():
     log: list[str] = []
 
     game = breeze.core.Game("Test")
@@ -58,3 +61,23 @@ def test_ecs():
             "quit cmp"
             ]
 
+class SuccessException(Exception):
+    pass
+
+
+def test_name_checking():
+    game = breeze.core.Game("Test")
+
+    obj = game.add_game_object(GameObject("obj"))
+    try:
+        _ = game.add_game_object(GameObject("obj"))  # same name, should raise exception
+        raise SuccessException
+    except (SuccessException, ObjectNameAlreadyTakenException) as e:
+        assert type(e) == ObjectNameAlreadyTakenException
+
+    _ = obj.add_component(Component("cmp"))
+    try:
+        _ = obj.add_component(Component("cmp"))  # same name, shpuld raise exception
+        raise SuccessException
+    except (SuccessException, ComponentNameAlreadyTakenException) as e:
+        assert type(e) == ComponentNameAlreadyTakenException

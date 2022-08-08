@@ -1,4 +1,4 @@
-class ComponentAlreadyExistentException(
+class ComponentNameAlreadyTakenException(
     Exception
 ):
     pass
