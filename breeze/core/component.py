@@ -18,36 +18,15 @@ class Component:
         Construct a Component.
         """
 
-        self.parent_game = None
-        self.parent_game_object = None
+        self.parent_game: Game = None  # type: ignore
+        self.parent_game_object: GameObject = None  # type: ignore
 
-    def _init_component(
-        self,
-        parent_game: Game,
-        parent_game_object: GameObject,
-    ) -> None:
-        """
-        This method is used by breeze. Please do not override or call it.
-        """
-
-        self.parent_game = parent_game
-        self.parent_game_object = (
-            parent_game_object
-        )
-
-        self.init()
+        self.is_active: bool = True
 
     def init(self) -> None:
         """
         This method is called when the Component gets added to a GameObject.
         """
-
-    def _update_component(self) -> bool:
-        """
-        This method is used by breeze. Please do not override or call it.
-        """
-
-        return self.update()
 
     def update(self) -> bool:
         """
@@ -57,13 +36,6 @@ class Component:
         """
 
         return True
-
-    def _quit_component(self) -> None:
-        """
-        This method is used by breeze. Please do not override or call it.
-        """
-
-        self.quit()
 
     def quit(self) -> None:
         """

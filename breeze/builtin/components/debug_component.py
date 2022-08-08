@@ -6,12 +6,12 @@ class DebugComponent(Component):
         super().__init__()
 
     def init(self) -> None:
-        print(f"Added component '{self.TYPE}' to '{self.parent_game_object.name}'")  # type: ignore
+        print(f"\tAdded Component '{self.TYPE}' to '{self.parent_game_object.name}'")
 
     def update(self) -> bool:
-        print(f"Updated component '{self.TYPE}' of '{self.parent_game_object.name}'")  # type: ignore
+        print(f"\tUpdated Component '{self.TYPE}' of '{self.parent_game_object.name}'")
 
         return True
 
     def quit(self) -> None:
-        print(f"Deleted component '{self.TYPE}' from '{self.parent_game_object.name}'")  # type: ignore
+        print(f"\tDeleted Component '{self.TYPE}' from '{self.parent_game_object.name}'")

@@ -38,22 +38,26 @@ class Game:
         :returns: True if the game should continue, otherwise False
         """
 
-        for (
-            game_object
-        ) in self.__game_objects.values():
+        for game_object in self.__game_objects.values():
             if game_object.is_active:
-                if (
-                    not game_object._update_game_object()
-                ):  # TODO: make non-overridable
+                if not game_object.update():
                     return False
 
-        for name in self.__game_objects_to_delete:
-            self.__game_objects[
-                name
-            ]._quit_game_object()
-            del self.__game_objects[name]
+                for component in game_object.get_all_components().values():
+                    if component.is_active:
+                        if not component.update():
+                            return False
 
-        self.__game_objects_to_delete = []
+            for type_ in game_object.components_to_delete:
+                game_object.get_component(type_).quit()
+                del game_object.__components[type_]
+
+        for name in self.__game_objects_to_delete:
+            for component in self.__game_objects[name].get_all_components().values():
+                component.quit()
+
+            self.__game_objects[name].quit()
+            del self.__game_objects[name]
 
         return True
 
@@ -77,7 +81,9 @@ class Game:
                 f"A GameObject with name '{game_object.name}' is already added to the game"
             )
 
-        game_object._init_game_object(self)
+        game_object.parent_game = self
+        game_object.init()
+
         self.__game_objects[
             game_object.name
         ] = game_object
@@ -135,7 +141,10 @@ class Game:
 
     def quit(self) -> None:
         for game_object in self.__game_objects.values():
-            game_object._quit_game_object()
+            game_object.quit()
+
+            for component in game_object.get_all_components().values():
+                component.quit()
 
     @property
     def title(self) -> str:

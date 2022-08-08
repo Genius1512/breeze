@@ -28,48 +28,18 @@ class GameObject:
         self.__components: dict[
             str, Component
         ] = {}
-        self.__components_to_delete: list[
+        self.components_to_delete: list[
             str
         ] = []
 
-        self.parent_game = None
+        self.parent_game: Game = None  # type: ignore
         self.is_active: bool = True
-
-    def _init_game_object(
-        self, parent_game: Game
-    ):  # TODO: add this as a private method to the Game class
-        """
-        This method is used by breeze. Please don't override or call it.
-        """
-
-        self.parent_game = parent_game
-
-        self.init()
 
     def init(self) -> None:
         """
         Called when the GameObject is added to a game.
         Add components to the GameObject in this function.
         """
-
-    def _update_game_object(self) -> bool:
-        """
-        This method is used by breeze. Please don't override or call it.
-        """
-
-        for (
-            component
-        ) in self.__components.values():
-            if not component._update_component():
-                return False
-
-        for type_ in self.__components_to_delete:
-            self.__components[
-                type_
-            ]._quit_component()
-            del self.__components[type_]
-
-        return self.update()
 
     def update(self) -> bool:
         """
@@ -80,13 +50,6 @@ class GameObject:
         """
 
         return True
-
-    def _quit_game_object(self) -> None:
-        """
-        This method is used by breeze. Don't override or call it.
-        """
-
-        self.quit()
 
     def quit(self) -> None:
         """
@@ -109,7 +72,10 @@ class GameObject:
                 f"Cannot add component '{component.TYPE}' a second time"
             )
 
-        component._init_component(self.parent_game, self)  # type: ignore
+        component.parent_game = self.parent_game
+        component.parent_game_object = self
+        component.init()
+        
         self.__components[
             component.TYPE
         ] = component
@@ -158,7 +124,7 @@ class GameObject:
                 f"Component with type '{type_}' could not be found"
             )
 
-        self.__components_to_delete.append(type_)
+        self.components_to_delete.append(type_)
 
     @property
     def name(self) -> str:

@@ -6,12 +6,12 @@ class DebugGameObject(GameObject):
         super().__init__(name)
 
     def init(self) -> None:
-        print(f"'{self.name}' was created")
+        print(f"Added GameObject '{self.name}'")
 
     def update(self) -> bool:
-        print(f"Updated '{self.name}'")
+        print(f"Updated GameObject '{self.name}'")
 
         return True
 
     def quit(self) -> None:
-        print(f"Deleted '{self.name}'")
+        print(f"Deleted GameObject '{self.name}'")
