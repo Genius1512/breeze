@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "breeze"
-version = "0.1.0.2"
+version = "0.1.2"
 description = ""
 authors = ["Silvan Schmidt <silvan.genius@gmail.com>"]
 license = "MIT"
@@ -12,11 +12,34 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pyopengl = "^3.1.6"
+glfw = "^2.5.4"
+numpy = "^1.23.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
 pytest = "^7.1.2"
-toml = "0.10.2"
+sphinx = "^5.0.2"
+sphinx-rtd-theme = "^1.0.0"
+toml = "^0.10.2"
+pyright = "^1.1.265"
+
+[tool.pyright]
+pythonVersion = "3.10"
+
+typeCheckingMode = "basic"
+
+reportWildcardImportFromLibrary = "none"
+reportMissingTypeStubs = "none"
+reportPrivateUsage = false
+
+ignore = [
+  "**/__init__.py"
+]
+
+
+[tool.black]
+line-length = 50
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
