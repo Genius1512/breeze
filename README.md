@@ -12,7 +12,7 @@ This project is licensed by Silvan Schmidt under the [MIT License](LICENSE)
 
 ## TODO
 
-- [ ] Comment ECS
+- [x] Comment ECS
 - [ ] LoggerComponent
   - [ ] Logic
   - [ ] Let DebugGameObject and DebugComponent use the logger
