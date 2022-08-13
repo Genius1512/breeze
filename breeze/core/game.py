@@ -38,26 +38,62 @@ class Game:
         :returns: True if the game should continue, otherwise False
         """
 
-        for game_object in self.__game_objects.values():                                    # Loop over game_objects
-            if game_object.is_active:                                                       # Check if the GameObject is active
-                if not game_object.update():                                                # Update the GameObject 
-                    return False                                                            # Quit if should quit
+        for (
+            game_object
+        ) in (
+            self.__game_objects.values()
+        ):  # Loop over game_objects
+            if (
+                game_object.is_active
+            ):  # Check if the GameObject is active
+                if (
+                    not game_object.update()
+                ):  # Update the GameObject
+                    return False  # Quit if should quit
 
-                for component in game_object.get_all_components().values():                 # Loop over Components of GameObject
-                    if component.is_active:                                                 # Check if the GameObject is active
-                        if not component.update():                                          # Update the Component
-                            return False                                                    # Quit if should quit
+                for (
+                    component
+                ) in (
+                    game_object.get_all_components().values()
+                ):  # Loop over Components of GameObject
+                    if (
+                        component.is_active
+                    ):  # Check if the GameObject is active
+                        if (
+                            not component.update()
+                        ):  # Update the Component
+                            return False  # Quit if should quit
 
-            for name in game_object.components_to_delete:                                   # Loop over the Components to delete of the Component
-                game_object.get_component(name).quit()                                      # Call the quit method
-                del game_object.__components[name]                                          # Delete the Component
+            for (
+                name
+            ) in (
+                game_object.components_to_delete
+            ):  # Loop over the Components to delete of the Component
+                game_object.get_component(
+                    name
+                ).quit()  # Call the quit method
+                del game_object.__components[
+                    name
+                ]  # Delete the Component
 
-        for name in self.__game_objects_to_delete:                                          # Loop over the GameObjects to delete
-            for component in self.__game_objects[name].get_all_components().values():       # Loop over its Components
-                component.quit()                                                            # Call the quit method
+        for (
+            name
+        ) in (
+            self.__game_objects_to_delete
+        ):  # Loop over the GameObjects to delete
+            for component in (
+                self.__game_objects[name]
+                .get_all_components()
+                .values()
+            ):  # Loop over its Components
+                component.quit()  # Call the quit method
 
-            self.__game_objects[name].quit()                                                # Call the quit method
-            del self.__game_objects[name]                                                   # Delete the GameObject
+            self.__game_objects[
+                name
+            ].quit()  # Call the quit method
+            del self.__game_objects[
+                name
+            ]  # Delete the GameObject
 
         return True
 
@@ -140,10 +176,16 @@ class Game:
         self.__game_objects_to_delete.append(name)
 
     def quit(self) -> None:
-        for game_object in self.__game_objects.values():
+        for (
+            game_object
+        ) in self.__game_objects.values():
             game_object.quit()
 
-            for component in game_object.get_all_components().values():
+            for (
+                component
+            ) in (
+                game_object.get_all_components().values()
+            ):
                 component.quit()
 
     @property

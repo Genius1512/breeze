@@ -1,7 +1,11 @@
 import breeze
 from breeze.core import Component, GameObject
-from breeze.exceptions.component import ComponentNameAlreadyTakenException
-from breeze.exceptions.game_object import ObjectNameAlreadyTakenException
+from breeze.exceptions.component import (
+    ComponentNameAlreadyTakenException,
+)
+from breeze.exceptions.game_object import (
+    ObjectNameAlreadyTakenException,
+)
 
 
 class TstingGameObject(breeze.core.GameObject):
@@ -9,7 +13,7 @@ class TstingGameObject(breeze.core.GameObject):
         super().__init__("obj")
 
         self.log = log
-    
+
     def init(self) -> None:
         self.log.append("init obj")
 
@@ -39,13 +43,15 @@ class TstingComponent(breeze.core.Component):
     def quit(self) -> None:
         self.log.append("quit cmp")
 
- 
+
 def test_updating_logic():
     log: list[str] = []
 
     game = breeze.core.Game("Test")
 
-    obj = game.add_game_object(TstingGameObject(log))
+    obj = game.add_game_object(
+        TstingGameObject(log)
+    )
     _ = obj.add_component(TstingComponent(log))
 
     game.update()
@@ -53,13 +59,14 @@ def test_updating_logic():
     game.quit()
 
     assert log == [
-            "init obj",
-            "init cmp",
-            "update obj",
-            "update cmp",
-            "quit obj",
-            "quit cmp"
-            ]
+        "init obj",
+        "init cmp",
+        "update obj",
+        "update cmp",
+        "quit obj",
+        "quit cmp",
+    ]
+
 
 class SuccessException(Exception):
     pass
@@ -70,14 +77,30 @@ def test_name_checking():
 
     obj = game.add_game_object(GameObject("obj"))
     try:
-        _ = game.add_game_object(GameObject("obj"))  # same name, should raise exception
+        _ = game.add_game_object(
+            GameObject("obj")
+        )  # same name, should raise exception
         raise SuccessException
-    except (SuccessException, ObjectNameAlreadyTakenException) as e:
-        assert type(e) == ObjectNameAlreadyTakenException
+    except (
+        SuccessException,
+        ObjectNameAlreadyTakenException,
+    ) as e:
+        assert (
+            type(e)
+            == ObjectNameAlreadyTakenException
+        )
 
     _ = obj.add_component(Component("cmp"))
     try:
-        _ = obj.add_component(Component("cmp"))  # same name, shpuld raise exception
+        _ = obj.add_component(
+            Component("cmp")
+        )  # same name, shpuld raise exception
         raise SuccessException
-    except (SuccessException, ComponentNameAlreadyTakenException) as e:
-        assert type(e) == ComponentNameAlreadyTakenException
+    except (
+        SuccessException,
+        ComponentNameAlreadyTakenException,
+    ) as e:
+        assert (
+            type(e)
+            == ComponentNameAlreadyTakenException
+        )
