@@ -13,7 +13,12 @@ def main():
     obj = game.add_game_object(
         DebugGameObject("Obj")
     )
-    cmp = obj.add_component(DebugComponent("Cmp"))
+    cmp1 = obj.add_component(
+        DebugComponent("Cmp1")
+    )
+    cmp2 = obj.add_component(
+        DebugComponent("Cmp2")
+    )
 
     try:
         while game.update():
