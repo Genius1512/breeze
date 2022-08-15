@@ -4,6 +4,7 @@ from argparse import (
     Namespace,
 )
 import os
+import re
 from sys import argv, exit
 
 
@@ -24,6 +25,48 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
+
+
+COMPONENT_CODE = """from breeze.core import Component
+
+
+class {0}(Component):
+    def __init__(self):
+        super().__init__("{0}")
+
+    # Called when the Component is added to a GameObject
+    def init(self) -> None:
+        pass
+    
+    # Called every frame
+    def update(self) -> bool:
+        return True
+
+    # Called when the Component is deleted
+    def quit(self) -> None:
+        pass
+"""
+
+
+GAMEOBJECT_CODE = """from breeze.core import GameObject
+
+
+class {0}(GameObject):
+    def __init__(self):
+        super().__init__("{0}")
+
+    # Called when the GameObject is added to a Game
+    def init(self) -> None:
+        pass
+
+    # Called every frame
+    def update(self) -> bool:
+        return True
+
+    # Called when the GameObject is deleted
+    def quit(self) -> None:
+        pass
 """
 
 
@@ -69,8 +112,6 @@ def parse_args(args: list[str]) -> Namespace:
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
 
-    print(args)
-
     if args.action == "init":
         project_name = args.name
         project_dir = args.out
@@ -112,8 +153,28 @@ def main(argv: list[str]) -> int:
             f.write("breeze\n")
 
     if args.action == "new":
-        type_ = args.type
-        entity_name = args.name
+        type_: str = args.type
+        entity_name: str = args.name
+
+        text: str = ""
+
+        match type_:
+            case "component":
+                text = COMPONENT_CODE.format(
+                    entity_name
+                )
+
+            case "game_object":
+                text = GAMEOBJECT_CODE.format(
+                    entity_name
+                )
+
+        entity_name = re.sub(
+            r"(?<!^)(?=[A-Z])", "_", entity_name
+        ).lower()
+
+        with open(f"{entity_name}.py", "w") as f:
+            f.write(text)
 
     return 0
 
