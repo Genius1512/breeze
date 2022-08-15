@@ -28,9 +28,7 @@ class GameObject:
         self.__components: dict[
             str, Component
         ] = {}
-        self.components_to_delete: list[
-            str
-        ] = []
+        self.components_to_delete: list[str] = []
 
         self.parent_game: Game = None  # type: ignore
         self.is_active: bool = True
@@ -75,7 +73,7 @@ class GameObject:
         component.parent_game = self.parent_game
         component.parent_game_object = self
         component.init()
-        
+
         self.__components[
             component.name
         ] = component
@@ -109,9 +107,7 @@ class GameObject:
         """
         return self.__components
 
-    def remove_component(
-        self, name: str
-    ) -> None:
+    def remove_component(self, name: str) -> None:
         """
         Remove the Component with the given type.
         This will call the quit() method of the component.
