@@ -16,4 +16,4 @@ jobs:
       - uses: psf/black@stable
       - uses: isort/isort-action@master
         with:
-          configuration: ""
+          configuration: "-v"
