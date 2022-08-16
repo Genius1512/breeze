@@ -10,3 +10,7 @@ class GLFWCouldNotCreateWindowException(
     """
     Raised when breeze failes to init a window with GLFW
     """
+
+
+class CannotRebindParentGame(Exception):
+    pass

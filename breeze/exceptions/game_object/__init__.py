@@ -4,3 +4,7 @@ class ObjectNameAlreadyTakenException(Exception):
 
 class GameObjectNotFoundException(Exception):
     pass
+
+
+class CannotRebindParentGameObject(Exception):
+    pass

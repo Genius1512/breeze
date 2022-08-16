@@ -1,2 +1,2 @@
 #!/bin/bash
-poetry run pytest test/
+poetry run pytest

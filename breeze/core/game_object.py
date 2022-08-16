@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from breeze.exceptions.game import (
+    CannotRebindParentGame,
+)
+
 if TYPE_CHECKING:
     from breeze.core import Component, Game
 
@@ -30,8 +34,10 @@ class GameObject:
         ] = {}
         self.components_to_delete: list[str] = []
 
-        self.parent_game: Game = None  # type: ignore
+        self.__parent_game: Game = None  # type: ignore
         self.is_active: bool = True
+
+        self.__set_parent_game = False
 
     def init(self) -> None:
         """
@@ -70,7 +76,7 @@ class GameObject:
                 f"A Component with name {component.name} is already added to the GameObject"
             )
 
-        component.parent_game = self.parent_game
+        component.parent_game = self.__parent_game
         component.parent_game_object = self
         component.init()
 
@@ -121,6 +127,19 @@ class GameObject:
             )
 
         self.components_to_delete.append(name)
+
+    @property
+    def parent_game(self):
+        """A reference to the parent game"""
+        return self.__parent_game
+
+    @parent_game.setter
+    def parent_game(self, value):
+        if not self.__set_parent_game:
+            self.__parent_game = value
+            self.__set_parent_game = True
+        else:
+            raise CannotRebindParentGame()
 
     @property
     def name(self) -> str:

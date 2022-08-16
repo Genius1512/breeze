@@ -54,6 +54,6 @@ class Logger:
         )
         return f"[{type_}]({time_stamp}) {self.__name}: {msg}"
 
-    @staticmethod
-    def name() -> str:
+    @property
+    def name(self) -> str:
         return self.__name

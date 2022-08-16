@@ -3,7 +3,11 @@ from breeze.core import Component, GameObject
 from breeze.exceptions.component import (
     ComponentNameAlreadyTakenException,
 )
+from breeze.exceptions.game import (
+    CannotRebindParentGame,
+)
 from breeze.exceptions.game_object import (
+    CannotRebindParentGameObject,
     ObjectNameAlreadyTakenException,
 )
 
@@ -103,4 +107,38 @@ def test_name_checking():
         assert (
             type(e)
             == ComponentNameAlreadyTakenException
+        )
+
+
+def test_block_rebinding():
+    game = breeze.core.Game("")
+
+    obj = game.add_game_object(GameObject("obj"))
+    cmp = obj.add_component(Component("cmp"))
+
+    try:
+        obj.parent_game = None
+    except (
+        SuccessException,
+        CannotRebindParentGame,
+    ) as e:
+        assert type(e) == CannotRebindParentGame
+
+    try:
+        cmp.parent_game = None
+    except (
+        SuccessException,
+        CannotRebindParentGame,
+    ) as e:
+        assert type(e) == CannotRebindParentGame
+
+    try:
+        cmp.parent_game_object = None
+    except (
+        SuccessException,
+        CannotRebindParentGameObject,
+    ) as e:
+        assert (
+            type(e)
+            == CannotRebindParentGameObject
         )
