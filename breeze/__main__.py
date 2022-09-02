@@ -1,5 +1,4 @@
 from argparse import (
-    ArgumentError,
     ArgumentParser,
     Namespace,
 )
