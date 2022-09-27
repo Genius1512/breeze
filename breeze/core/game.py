@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from breeze.core.window import Window
 
 if TYPE_CHECKING:
     from breeze.core import GameObject
-
-import sdl2.ext
 
 from breeze.exceptions.game_object import (
     GameObjectNotFoundException,
@@ -18,7 +17,7 @@ class Game:
     The main class of breeze. It represents a game.
     """
 
-    def __init__(self, title: str) -> None:
+    def __init__(self, title: str, width: int, height: int, background: str) -> None:
         """
         Construct a game.
 
@@ -33,12 +32,7 @@ class Game:
             str
         ] = []
 
-        sdl2.ext.init()
-
-        self.__window = sdl2.ext.Window(
-            title, size=(640, 480)
-        )
-        self.__window.show()
+        self.window = Window(self.title, width, height, background)
 
     def update(self) -> bool:
         """
@@ -46,6 +40,8 @@ class Game:
 
         :returns: True if the game should continue, otherwise False
         """
+        if not self.window.update():
+            return False
 
         for (
             game_object

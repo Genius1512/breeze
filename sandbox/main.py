@@ -2,7 +2,7 @@ from breeze.core import Game
 
 
 def main():
-    game = Game("Game")
+    game = Game("Game", 800, 600, "#ffffff")
 
     try:
         while game.update():
