@@ -1,14 +1,16 @@
 import pygame
 
+from breeze.color import Color
+
 
 class Window:
     def __init__(
-            self, title: str, width: int, height: int, background: str
+            self, title: str, width: int, height: int, background: Color
     ) -> None:
         self.__title: str = title
-        self.__width = width
-        self.__height = height
-        self.background = background
+        self.__width: int = width
+        self.__height: int = height
+        self.background: Color = background
 
         self.__fps: float = 0
         self.__framecount: int = 0
@@ -28,7 +30,7 @@ class Window:
             if event.type == pygame.QUIT:
                 return False
 
-        self.screen.fill(self.background)
+        self.screen.fill(self.background.hex)
 
         self.__fps = self.clock.get_fps()
         self.__framecount += 1

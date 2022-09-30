@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from breeze.exceptions.game import (
     CannotRebindParentGame,
@@ -30,7 +30,7 @@ class GameObject:
         self.__name = name
 
         self.__components: dict[
-            str, Component
+            str, Any
         ] = {}
         self.components_to_delete: list[str] = []
 
@@ -61,8 +61,8 @@ class GameObject:
         """
 
     def add_component(
-        self, component: Component
-    ) -> Component:
+        self, component: Any
+            ) -> Any:
         """
         Add the given component to the GameObject.
         The init() method of the Component will be called.
@@ -88,7 +88,7 @@ class GameObject:
 
     def get_component(
         self, name: str
-    ) -> Component:
+    ) -> Any:
         """
         Get the Component with the given type.
         If there is no such Component, ComponentNotFoundException will
@@ -105,7 +105,7 @@ class GameObject:
 
     def get_all_components(
         self,
-    ) -> dict[str, Component]:
+    ) -> dict[str, Any]:
         """
         Get all Components of the GameObject.
 

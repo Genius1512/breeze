@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
+from breeze.color.color import Color, White
 from breeze.core.window import Window
 
 if TYPE_CHECKING:
@@ -17,7 +18,7 @@ class Game:
     The main class of breeze. It represents a game.
     """
 
-    def __init__(self, title: str, width: int, height: int, background: str) -> None:
+    def __init__(self, title: str, width: int = 800, height: int = 600, background: Color = White()) -> None:
         """
         Construct a game.
 
@@ -26,7 +27,7 @@ class Game:
         self.__title: str = title
 
         self.__game_objects: dict[
-            str, GameObject
+            str, Any
         ] = {}
         self.__game_objects_to_delete: list[
             str
@@ -105,8 +106,8 @@ class Game:
         return True
 
     def add_game_object(
-        self, game_object: GameObject
-    ) -> GameObject:
+        self, game_object: Any
+    ) -> Any:
         """
         Add the given GameObject to the game.
         Raises NameAlreadyTakenException when there is already a GameObject with this name.
@@ -135,7 +136,7 @@ class Game:
 
     def get_game_object(
         self, name: str
-    ) -> GameObject:
+    ) -> Any:
         """
         Get the GameObject with the given name.
         Raises GameObjectNotFoundException if there is no GameObject with this name.
@@ -154,7 +155,7 @@ class Game:
 
     def get_all_game_objects(
         self,
-    ) -> dict[str, GameObject]:
+    ) -> dict[str, Any]:
         """
         Get all GameObjects added to the game.
 
